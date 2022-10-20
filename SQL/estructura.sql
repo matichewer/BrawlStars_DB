@@ -7,7 +7,7 @@ CREATE TABLE jugadores (
  	fecha DATE NOT NULL,
  	hora TIME NOT NULL,
 	tag VARCHAR(15) NOT NULL,
-	copas INT UNSIGNED,
+	copas INT,
  
  	CONSTRAINT pk_jugadores
  	PRIMARY KEY (fecha,hora,tag)
