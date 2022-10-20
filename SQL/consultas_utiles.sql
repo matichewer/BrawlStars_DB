@@ -25,7 +25,20 @@ ORDER BY copas DESC;
 
 
 
-# diff de copas - FALTA TERMINAR
-SELECT j_7dias.fecha, j_actual.tag, (j_actual.copas - j_7dias.copas) AS copas
-FROM jugadores AS j_7dias, jugadores AS j_actual;
-WHERE
+# diff de copas
+SELECT
+	j_actual.tag,
+	j_7dias.fecha AS fecha_vieja,
+	j_7dias.copas AS copas_viejas,
+	j_actual.fecha AS fecha_actual,
+	j_actual.copas AS copas_actuales,
+	j_actual.copas - j_7dias.copas AS copas_diff
+
+FROM (	SELECT *
+		FROM jugadores
+		WHERE fecha = (SELECT DATE(NOW()) - INTERVAL 7 DAY)) AS j_7dias 
+JOIN (	SELECT *
+		FROM jugadores
+		WHERE fecha = (SELECT MAX(fecha) FROM jugadores)) AS j_actual
+ON j_7dias.tag=j_actual.tag
+ORDER BY copas_diff DESC;
