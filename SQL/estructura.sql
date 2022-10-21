@@ -14,3 +14,8 @@ CREATE TABLE jugadores (
 
 ) ENGINE=InnoDB;
 
+
+
+CREATE USER 'brawl-client'@'%' IDENTIFIED BY 'db-chewer-bs';
+GRANT SELECT ON brawlstars.jugadores TO 'brawl-client'@'%';
+
