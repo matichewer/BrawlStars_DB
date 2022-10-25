@@ -8,8 +8,13 @@ def mi_funcion():
     logging.critical('esto es un critical')
 
 
-logging.basicConfig(handlers=[logging.FileHandler(filename="test-log.log", 
-                                                 encoding='utf-8', mode='a+')],
+logging.basicConfig(handlers=[
+                            logging.FileHandler(
+                                        filename="test-log.log", 
+                                        encoding='utf-8', 
+                                        mode='a+'
+                                    )
+                            ],
                     format='%(asctime)s, %(levelname)-8s, [%(filename)s:%(funcName)s:%(lineno)s], %(message)s',
                     datefmt='%Y-%m-%d, %H:%M:%S, %A', 
                     level=logging.DEBUG)
