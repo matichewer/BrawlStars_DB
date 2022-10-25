@@ -1,17 +1,18 @@
-import logging as log
+import logging
 
 def mi_funcion():  
-    log.warning('esto es un warning')
-    log.info('esto es un info') 
-    log.debug('esto es un debug')
-    log.error('esto es un error')
-    log.critical('esto es un critical')
+    logging.warning('esto es un warning')
+    logging.info('esto es un info') 
+    logging.debug('esto es un debug')
+    logging.error('esto es un error')
+    logging.critical('esto es un critical')
 
 
-log.basicConfig(filename='example.log', 
-                    encoding='utf-8', 
-                    level=log.DEBUG,
-                    format='%(asctime)s, %(levelname)-8s, [%(filename)s:%(funcName)s:%(lineno)d], %(message)s',
-                    datefmt='%Y-%m-%d, %H:%M:%S')
+logging.basicConfig(handlers=[logging.FileHandler(filename="test-log.log", 
+                                                 encoding='utf-8', mode='a+')],
+                    format='%(asctime)s, %(levelname)-8s, [%(filename)s:%(funcName)s:%(lineno)s], %(message)s',
+                    datefmt='%Y-%m-%d, %H:%M:%S, %A', 
+                    level=logging.DEBUG)
+
 
 mi_funcion()

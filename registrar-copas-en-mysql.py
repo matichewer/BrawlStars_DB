@@ -1,4 +1,3 @@
-from subprocess import _TXT
 import brawlstats
 import mysql.connector
 import requests
@@ -9,15 +8,16 @@ def bot_send_text(bot_message):
     bot_chatID = '70429625'
     send_text = 'https://api.telegram.org/bot' + bot_token + '/sendMessage?chat_id=' + bot_chatID + '&parse_mode=Markdown&text=' + bot_message
     response = requests.get(send_text)
-	log.info('Telegram bot response: ' + response)
     return response
 
-log.basicConfig(filename='registrar-copas-en-mysql.log', 
-                    encoding='utf-8', 
-                    level=log.DEBUG,
-                    format='%(asctime)s, %(levelname)-8s, [%(filename)s:%(funcName)s:%(lineno)d], %(message)s',
-                    datefmt='%Y-%m-%d, %H:%M:%S')
-
+log.basicConfig(handlers=[
+								log.FileHandler(filename="logs/registrar-copas-en-mysql.log", 
+												encoding='utf-8',
+												mode='a+')
+							],
+                    format='%(asctime)s, %(levelname)-8s, [%(filename)s:%(funcName)s:%(lineno)s], %(message)s',
+                    datefmt='%Y-%m-%d, %H:%M:%S, %A', 
+					level=log.INFO)
 
 # Token Brawl Stars
 client = ''
@@ -50,4 +50,4 @@ mydb.commit()
 cursor.close()
 mydb.close()
 
-log.info('Registro exitoso')
+log.info('Successful registration')
