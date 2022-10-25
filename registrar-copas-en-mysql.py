@@ -11,7 +11,7 @@ def bot_send_text(bot_message):
     return response
 
 log.basicConfig(handlers=[
-								log.FileHandler(filename="logs/registrar-copas-en-mysql.log", 
+								log.FileHandler(filename="/home/wecher/Git/BrawlStars_DB/logs/registrar-copas-en-mysql.log", 
 												encoding='utf-8',
 												mode='a+')
 							],
