@@ -15,7 +15,7 @@ logging.basicConfig(handlers=[
                                         mode='a+'
                                     )
                             ],
-                    format='%(asctime)s, %(levelname)-8s, [%(filename)s:%(funcName)s:%(lineno)s], %(message)s',
+                    format='%(asctime)-31s, %(levelname)-8s, [%(filename)s:%(funcName)s:%(lineno)s], %(message)s',
                     datefmt='%Y-%m-%d, %H:%M:%S, %A', 
                     level=logging.DEBUG)
 
