@@ -1,7 +1,12 @@
+from time import sleep
 import brawlstats
 import mysql.connector
 import requests
-import logging as log
+
+import logging
+from logging.config import fileConfig
+from pathlib import Path
+
 
 def bot_send_text(bot_message):    
     bot_token = '1744210955:AAHgEC8e24vuP2LNyrdT5c-AdoLd7AXtM7E'
@@ -10,30 +15,25 @@ def bot_send_text(bot_message):
     response = requests.get(send_text)
     return response
 
-log.basicConfig(handlers=[
-								log.FileHandler(filename="/home/wecher/Git/BrawlStars_DB/logs/registrar-copas-en-mysql.log", 
-												encoding='utf-8',
-												mode='a+')
-							],
-                    format='%(asctime)-31s, %(levelname)-8s, [%(filename)s:%(funcName)s:%(lineno)s], %(message)s',
-                    datefmt='%Y-%m-%d, %H:%M:%S, %A', 
-					level=log.INFO)
-
-# Token Brawl Stars
-client = ''
-try:
-	client = brawlstats.Client('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjIyNmYyOTc2LTBhYzgtNDE0MC05NTMyLTdhMmQzY2ZlY2ZlNCIsImlhdCI6MTY2NTI2MzE1OCwic3ViIjoiZGV2ZWxvcGVyL2ZlNGU4OWJiLTI5ZjMtMjFiOC05YzBmLTc2MzhhNGMxNmMzNiIsInNjb3BlcyI6WyJicmF3bHN0YXJzIl0sImxpbWl0cyI6W3sidGllciI6ImRldmVsb3Blci9zaWx2ZXIiLCJ0eXBlIjoidGhyb3R0bGluZyJ9LHsiY2lkcnMiOlsiMTUyLjE2OS40Ny4xNjIiXSwidHlwZSI6ImNsaWVudCJ9XX0.gzk2ZKillueFmsvShvEiNjqR3zkj2p09Fqsw7ufqJ_ruJpkMtDeZ7XVQD3ybg2Gs5cSoBZEax7wB5kidyd9XrQ')
-except: # catch all exceptions
-	msg = "Error making request to BrawlStars"
-	log.error(msg)
-	bot_send_text(msg)
-	exit(1)
-	
-club = client.get_club('2GVC0QRPY')
-members = club.get_members()
+def getMembers():
+	client = ''
+	try:
+		client = brawlstats.Client('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjIyNmYyOTc2LTBhYzgtNDE0MC05NTMyLTdhMmQzY2ZlY2ZlNCIsImlhdCI6MTY2NTI2MzE1OCwic3ViIjoiZGV2ZWxvcGVyL2ZlNGU4OWJiLTI5ZjMtMjFiOC05YzBmLTc2MzhhNGMxNmMzNiIsInNjb3BlcyI6WyJicmF3bHN0YXJzIl0sImxpbWl0cyI6W3sidGllciI6ImRldmVsb3Blci9zaWx2ZXIiLCJ0eXBlIjoidGhyb3R0bGluZyJ9LHsiY2lkcnMiOlsiMTUyLjE2OS40Ny4xNjIiXSwidHlwZSI6ImNsaWVudCJ9XX0.gzk2ZKillueFmsvShvEiNjqR3zkj2p09Fqsw7ufqJ_ruJpkMtDeZ7XVQD3ybg2Gs5cSoBZEax7wB5kidyd9XrQ')
+	except: # catch all exceptions
+		msg = "Error making request to BrawlStars"
+		log.error(msg)
+		bot_send_text(msg)
+		exit(1)		
+	club = client.get_club('2GVC0QRPY')
+	members = club.get_members()
+	return members
 
 
 
+fileConfig('logs/config.ini', defaults={ 'file-name': Path(__file__).stem })
+log = logging.getLogger()
+
+members = getMembers()
 mydb = mysql.connector.connect(
 	host="localhost",
 	user="root",
