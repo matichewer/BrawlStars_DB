@@ -1,8 +1,6 @@
 import logging
 from logging.config import fileConfig
-import os
 from pathlib import Path
-import sys
 
 def mi_funcion():  
     log.warning('esto es un warning')
