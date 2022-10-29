@@ -8,11 +8,10 @@ def mi_funcion():
     log.debug('esto es un debug')
     log.error('esto es un error')
     log.critical('esto es un critical')
-    print(Path(__file__).stem)
 
 
 
-fileConfig('log-config.ini', defaults={ 'file-name': Path(__file__).stem })
+fileConfig('config.ini', defaults={ 'file-name': Path(__file__).stem })
 log = logging.getLogger()
 
 
