@@ -23,8 +23,6 @@ WHERE fecha = (SELECT DATE(NOW()) - INTERVAL 7 DAY)
 ORDER BY copas DESC;
 
 
-
-
 # diff de copas
 SELECT
 	j_actual.tag,
@@ -45,4 +43,6 @@ ORDER BY copas_diff DESC;
 
 
 # cant de horarios por dia
-select fecha, count(hora) as cant from (select distinct fecha,hora from jugadores) AS tabla group by fecha;
+SELECT fecha, COUNT(hora) as cant
+FROM (SELECT distinct fecha,hora FROM jugadores) AS tabla 
+GROUP BY fecha;
