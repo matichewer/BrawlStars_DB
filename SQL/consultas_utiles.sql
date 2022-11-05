@@ -42,3 +42,7 @@ JOIN (	SELECT *
 		WHERE fecha = (SELECT MAX(fecha) FROM jugadores)) AS j_actual
 ON j_7dias.tag=j_actual.tag
 ORDER BY copas_diff DESC;
+
+
+# cant de horarios por dia
+select fecha, count(hora) as cant from (select distinct fecha,hora from jugadores) AS tabla group by fecha;
