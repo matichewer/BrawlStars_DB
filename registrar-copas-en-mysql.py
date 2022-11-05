@@ -1,4 +1,5 @@
 from time import sleep
+from datetime import datetime
 import brawlstats
 import mysql.connector
 import requests
@@ -7,6 +8,11 @@ import logging
 from logging.config import fileConfig
 from pathlib import Path
 
+def getTime():
+	now = datetime.now()
+	fecha = now.strftime('%Y-%m-%d')
+	hora = now.strftime('%H:%M:%S')
+	return (fecha, hora)
 
 def bot_send_text(bot_message):    
     bot_token = '1744210955:AAHgEC8e24vuP2LNyrdT5c-AdoLd7AXtM7E'
@@ -40,10 +46,12 @@ mydb = mysql.connector.connect(
 	password="matute",
 	database='brawlstars'
 )
+
+(fecha, hora) = getTime()
 cursor = mydb.cursor()
-sentencia_sql = 'INSERT INTO jugadores VALUES (CURDATE(), CURTIME(), \"%s\", %i)'
+sentencia_sql = 'INSERT INTO jugadores VALUES (\"%s\", \"%s\", \"%s\", %i)'
 for member in members:
-	cursor.execute(sentencia_sql % (member.tag, member.trophies))
+	cursor.execute(sentencia_sql % (fecha, hora, member.tag, member.trophies))
 
 
 mydb.commit()
